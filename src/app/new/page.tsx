@@ -36,29 +36,29 @@ export default function NewTopicPage() {
   }
 
   return (
-    <div className="py-6 px-4 sm:px-6 max-w-2xl">
-      <h1 className="font-display text-2xl font-bold mb-6">Nouveau sujet</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {error && <div className="bg-destructive/10 border border-destructive/20 text-destructive text-[12px] rounded-lg px-3 py-2">{error}</div>}
+    <div className="container-fluid content-constrain py-10 max-w-3xl">
+      <h1 className="font-display text-3xl font-bold mb-8">Nouveau sujet</h1>
+      <form onSubmit={handleSubmit} className="space-y-5">
+        {error && <div className="bg-destructive/10 border border-destructive/20 text-destructive text-sm rounded-lg px-4 py-3">{error}</div>}
         <div>
-          <label className="block text-[10px] font-semibold text-muted-foreground mb-1.5 font-mono uppercase tracking-[0.1em]">Catégorie</label>
+          <label className="block text-xs font-semibold text-muted-foreground mb-2 font-mono uppercase tracking-wider">Catégorie</label>
           <select value={categoryId} onChange={e => setCategoryId(e.target.value)}
-            className="w-full bg-card border border-border rounded-lg px-3 py-2 text-[13px] text-foreground focus:outline-none focus:ring-1 focus:ring-primary">
+            className="w-full bg-card border border-border rounded-lg px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary">
             <option value="">Sans catégorie</option>
             {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-[10px] font-semibold text-muted-foreground mb-1.5 font-mono uppercase tracking-[0.1em]">Titre</label>
-          <Input value={title} onChange={e => setTitle(e.target.value)} required minLength={5} placeholder="Titre de la discussion" className="bg-card border-border text-[13px] h-10 rounded-lg" />
+          <label className="block text-xs font-semibold text-muted-foreground mb-2 font-mono uppercase tracking-wider">Titre</label>
+          <Input value={title} onChange={e => setTitle(e.target.value)} required minLength={5} placeholder="Titre de la discussion" className="bg-card border-border text-sm h-11 rounded-lg" />
         </div>
         <div>
-          <label className="block text-[10px] font-semibold text-muted-foreground mb-1.5 font-mono uppercase tracking-[0.1em]">Message</label>
+          <label className="block text-xs font-semibold text-muted-foreground mb-2 font-mono uppercase tracking-wider">Message</label>
           <RichEditor content={content} onChange={setContent} placeholder="Votre message…" />
         </div>
         <div className="flex items-center gap-3 pt-2">
-          <Button type="submit" disabled={submitting} className="rounded-lg bg-primary hover:bg-primary/90 text-sm h-9 font-semibold">{submitting ? "…" : "Publier"}</Button>
-          <Button type="button" variant="ghost" onClick={() => router.back()} className="rounded-lg text-sm text-muted-foreground h-9">Annuler</Button>
+          <Button type="submit" disabled={submitting} className="rounded-lg bg-primary hover:bg-primary/90 text-sm h-10 font-semibold px-6">{submitting ? "…" : "Publier"}</Button>
+          <Button type="button" variant="ghost" onClick={() => router.back()} className="rounded-lg text-sm text-muted-foreground h-10">Annuler</Button>
         </div>
       </form>
     </div>

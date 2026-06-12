@@ -2,228 +2,222 @@
 @import "tw-animate-css";
 
 /* ═══════════════════════════════════
-   4by4 — Dark-Only Premium Forum
+   4by4 — Full-Width Premium Forum
    Off-black · Industrial Orange · Mint
+   GSAP-powered animations
    ═══════════════════════════════════ */
 
 :root {
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Geist', system-ui, sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, monospace;
+
+  /* Design tokens (dark only) */
+  --bg-root: #0A0B0F;
+  --bg-surface: #111217;
+  --bg-elevated: #17181E;
+  --bg-hover: #1C1D24;
+  --text-primary: #EDEEF0;
+  --text-secondary: #9A9BA0;
+  --text-muted: #626368;
+  --accent-orange: #FF4D1C;
+  --accent-mint: #00D4AA;
+  --border-subtle: rgba(255,255,255,0.05);
+  --border-default: rgba(255,255,255,0.08);
+  --border-hover: rgba(255,255,255,0.12);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --transition-fast: 0.18s ease;
+  --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── shadcn/ui tokens (dark only, no light mode) ── */
-:root {
-  --radius: 0.5rem;
-
-  /* Off-black hierarchy */
-  --background: #0C0D10;
-  --foreground: #EDEDEE;
-  --card: #14151A;
-  --card-foreground: #EDEDEE;
-  --popover: #14151A;
-  --popover-foreground: #EDEDEE;
-
-  /* Primary — Industrial Orange */
-  --primary: #FF4D1C;
-  --primary-foreground: #FFFFFF;
-
-  /* Secondary — Mint / Teal */
-  --secondary: #00D4AA;
-  --secondary-foreground: #0C0D10;
-
-  /* Muted */
-  --muted: #1A1B22;
-  --muted-foreground: #8E8E94;
-
-  /* Accent */
-  --accent: #1A1B22;
-  --accent-foreground: #EDEDEE;
-
-  /* Semantic */
-  --destructive: #EF4444;
-  --destructive-foreground: #FFFFFF;
-  --success: #00D4AA;
-  --success-foreground: #0C0D10;
-
-  /* Borders — whisper subtle */
-  --border: rgba(255, 255, 255, 0.06);
-  --input: rgba(255, 255, 255, 0.08);
-  --ring: #FF4D1C;
-
-  /* Sidebar */
-  --sidebar-background: #0C0D10;
-  --sidebar-foreground: #EDEDEE;
-  --sidebar-primary: #FF4D1C;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #14151A;
-  --sidebar-accent-foreground: #EDEDEE;
-  --sidebar-border: rgba(255, 255, 255, 0.05);
-  --sidebar-ring: #FF4D1C;
-
-  /* Charts */
-  --chart-1: #FF4D1C;
-  --chart-2: #00D4AA;
-  --chart-3: #6366F1;
-  --chart-4: #F59E0B;
-  --chart-5: #EC4899;
+@theme inline {
+  --color-background: var(--bg-root);
+  --color-foreground: var(--text-primary);
+  --color-card: var(--bg-surface);
+  --color-card-foreground: var(--text-primary);
+  --color-popover: var(--bg-elevated);
+  --color-popover-foreground: var(--text-primary);
+  --color-primary: var(--accent-orange);
+  --color-primary-foreground: #FFFFFF;
+  --color-secondary: var(--accent-mint);
+  --color-secondary-foreground: var(--bg-root);
+  --color-muted: var(--bg-elevated);
+  --color-muted-foreground: var(--text-secondary);
+  --color-accent: var(--bg-hover);
+  --color-accent-foreground: var(--text-primary);
+  --color-destructive: #EF4444;
+  --color-destructive-foreground: #FFFFFF;
+  --color-success: var(--accent-mint);
+  --color-success-foreground: var(--bg-root);
+  --color-border: var(--border-default);
+  --color-input: var(--border-default);
+  --color-ring: var(--accent-orange);
+  --color-sidebar: var(--bg-surface);
+  --color-sidebar-foreground: var(--text-primary);
+  --color-sidebar-primary: var(--accent-orange);
+  --color-sidebar-primary-foreground: #FFFFFF;
+  --color-sidebar-accent: var(--bg-elevated);
+  --color-sidebar-accent-foreground: var(--text-primary);
+  --color-sidebar-border: var(--border-subtle);
+  --color-sidebar-ring: var(--accent-orange);
+  --radius: var(--radius-md);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-mono);
 }
 
-/* ═══════════════════════════════════
-   Base
-   ═══════════════════════════════════ */
-
-* { border-color: var(--border); }
+/* ── Base ── */
+* { border-color: var(--border-default); }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--bg-root);
+  color: var(--text-primary);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "cv01", "ss03";
-  line-height: 1.6;
 }
 
-h1, h2, h3, h4, .font-display {
-  font-family: var(--font-display);
-  letter-spacing: -0.02em;
-  font-weight: 700;
-}
+h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; font-weight: 700; }
 
-::selection {
-  background: rgba(255, 77, 28, 0.2);
-  color: #FF4D1C;
-}
+::selection { background: rgba(255, 77, 28, 0.2); color: #FF4D1C; }
+:focus-visible { outline: 2px solid var(--accent-orange); outline-offset: 2px; }
+a { color: var(--text-primary); text-decoration: none; transition: color var(--transition-fast); }
+a:hover { color: var(--accent-orange); }
 
-:focus-visible {
-  outline: 2px solid #FF4D1C;
-  outline-offset: 2px;
-}
-
-/* ── Links ── */
-a { color: var(--foreground); text-decoration: none; transition: color 0.15s; }
-a:hover { color: var(--primary); }
-
-/* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.14); }
 
 /* ═══════════════════════════════════
-   Forum Utilities
+   Layout Utilities
    ═══════════════════════════════════ */
 
-/* Card panel (dark surfaces with subtle border) */
-.card-panel {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+.container-fluid {
+  width: 100%;
+  padding-left: max(1.5rem, 3vw);
+  padding-right: max(1.5rem, 3vw);
 }
 
-.card-panel-hover:hover {
-  border-color: rgba(255,255,255,0.1);
-  background: #18191F;
+.content-constrain {
+  max-width: 1400px;
+  margin-inline: auto;
 }
 
-/* Topic table row */
-.topic-row {
-  display: grid;
-  grid-template-columns: 1fr 120px 180px;
-  align-items: center;
-  gap: 1rem;
+/* ── Section spacing ── */
+.section-gap { padding-top: 5rem; padding-bottom: 5rem; }
+
+/* ── Card panels ── */
+.panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+.panel:hover { border-color: var(--border-default); }
+
+.panel-elevated {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+}
+
+/* ═══════════════════════════════════
+   Forum Table
+   ═══════════════════════════════════ */
+
+.topic-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.topic-table th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--border);
-  transition: background 0.12s;
+  border-bottom: 1px solid var(--border-default);
 }
-.topic-row:hover { background: rgba(255,255,255,0.015); }
-.topic-row:last-child { border-bottom: none; }
+.topic-table td {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.875rem;
+  vertical-align: middle;
+}
+.topic-table tr { transition: background var(--transition-fast); }
+.topic-table tbody tr:hover { background: var(--bg-hover); }
+.topic-table tbody tr:last-child td { border-bottom: none; }
+
+.topic-table .col-title { width: auto; }
+.topic-table .col-stats { width: 130px; text-align: center; }
+.topic-table .col-last { width: 200px; }
+.topic-table .col-avatar { width: 44px; }
 
 @media (max-width: 640px) {
-  .topic-row { grid-template-columns: 1fr 50px; }
-  .topic-row .last-post-col { display: none; }
+  .topic-table .col-stats, .topic-table .col-last { display: none; }
 }
 
-/* Post layout — user card left, content right */
-.post-layout {
-  display: grid;
-  grid-template-columns: 170px 1fr;
-  gap: 1.5rem;
-  padding: 1.25rem;
-  border-bottom: 1px solid var(--border);
+/* ── Post layout (full-width, user inline top) ── */
+.post-card {
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--border-subtle);
 }
-.post-layout:last-child { border-bottom: none; }
+.post-card:last-child { border-bottom: none; }
 
-@media (max-width: 640px) {
-  .post-layout { grid-template-columns: 1fr; gap: 0.75rem; }
+/* ── Category card ── */
+.cat-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  transition: all var(--transition-smooth);
+  cursor: pointer;
 }
-
-/* Section header */
-.section-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border);
-}
-.section-head h2 {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--foreground);
-  letter-spacing: -0.01em;
+.cat-card:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-elevated);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
 }
 
-/* Accent glow */
-.glow-primary {
-  box-shadow: 0 0 30px rgba(255, 77, 28, 0.08);
+/* ── GSAP animation initial states (hidden until revealed) ── */
+.reveal-initial {
+  opacity: 0;
+  transform: translateY(24px);
 }
 
-.glow-secondary {
-  box-shadow: 0 0 30px rgba(0, 212, 170, 0.06);
-}
-
-/* ── Prose for posts ── */
+/* ── Prose for forum posts ── */
 .prose-forum {
-  color: var(--foreground);
-  line-height: 1.7;
+  color: var(--text-primary);
+  line-height: 1.75;
   font-size: 0.9375rem;
   word-wrap: break-word;
 }
-.prose-forum p { margin-bottom: 0.625rem; }
+.prose-forum p { margin-bottom: 0.75rem; }
 .prose-forum p:last-child { margin-bottom: 0; }
-.prose-forum img { max-width: 100%; border-radius: var(--radius); margin: 0.5rem 0; }
-.prose-forum code { background: var(--muted); padding: 0.125rem 0.375rem; border-radius: 3px; font-family: var(--font-mono); font-size: 0.85em; }
-.prose-forum pre { background: #0C0D10; border: 1px solid var(--border); padding: 1rem; border-radius: var(--radius); overflow-x: auto; margin: 0.75rem 0; font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1.5; }
-.prose-forum blockquote { border-left: 2px solid var(--primary); padding: 0.25rem 0 0.25rem 1rem; color: var(--muted-foreground); margin: 0.75rem 0; font-style: italic; }
-.prose-forum ul, .prose-forum ol { padding-left: 1.5rem; margin: 0.5rem 0; }
+.prose-forum img { max-width: 100%; border-radius: var(--radius-md); margin: 0.75rem 0; }
+.prose-forum code { background: var(--bg-elevated); padding: 0.125rem 0.375rem; border-radius: 3px; font-family: var(--font-mono); font-size: 0.85em; color: var(--accent-mint); }
+.prose-forum pre { background: var(--bg-root); border: 1px solid var(--border-default); padding: 1.25rem; border-radius: var(--radius-md); overflow-x: auto; margin: 1rem 0; font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1.6; }
+.prose-forum blockquote { border-left: 2px solid var(--accent-orange); padding: 0.25rem 0 0.25rem 1.25rem; color: var(--text-secondary); margin: 1rem 0; font-style: italic; }
+.prose-forum ul, .prose-forum ol { padding-left: 1.5rem; margin: 0.75rem 0; }
 .prose-forum li { margin-bottom: 0.25rem; }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --font-sans: var(--font-body);
-  --font-mono: var(--font-mono);
+/* ── Glow effects ── */
+.glow-orange { box-shadow: 0 0 40px rgba(255, 77, 28, 0.06); }
+.glow-mint { box-shadow: 0 0 40px rgba(0, 212, 170, 0.05); }
+
+/* ── Glass header ── */
+.glass-header {
+  background: rgba(10, 11, 15, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
