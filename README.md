@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Carré — Le forum
 
-## Getting Started
+Forum personnel élégant, construit avec Next.js 16, Tailwind v4 et Supabase.
 
-First, run the development server:
+## 🎨 Design
+
+- **Palette** : Noir charbon (#0D0D12) + Or (#D4A040)
+- **Typographie** : Playfair Display (titres) + DM Sans (corps) + JetBrains Mono (code)
+- **Style** : Dark-mode natif, cartes glass, bordures subtiles, animations GSAP
+
+## 🚀 Déploiement
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev    # Développement
+npm run build  # Build production
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🗄️ Base de données
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Option 1 — Dashboard Supabase (recommandé)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Aller sur https://supabase.com/dashboard/project/zxnfagxjilltrecojdco/sql/new
+2. Copier le contenu de `schema.sql`
+3. Cliquer "Run"
 
-## Learn More
+### Option 2 — CLI Supabase
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npx supabase login
+npx supabase link --project-ref zxnfagxjilltrecojdco
+npx supabase db push
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📋 Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+  app/            — Pages (App Router)
+  components/     — Composants React
+  lib/            — Utilitaires, types, clients Supabase
+schema.sql       — Schéma complet (tables, RLS, seeds)
+```
 
-## Deploy on Vercel
+## 🔑 Variables d'environnement
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+NEXT_PUBLIC_SUPABASE_URL=https://zxnfagxjilltrecojdco.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_...
+SUPABASE_SERVICE_ROLE_KEY=sb_secret_...
+```
