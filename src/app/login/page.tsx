@@ -51,7 +51,7 @@ function LoginForm() {
           <Link href="/" className="font-display text-3xl font-bold">4by4</Link>
           <p className="text-xs text-muted-foreground mt-2 font-mono uppercase tracking-wider">{isSignUp ? "Inscription" : "Connexion"}</p>
         </div>
-        <div className="panel p-6 glow-orange">
+        <div className="panel p-6 glow-terracotta">
           <form onSubmit={handleSubmit} className="space-y-3">
             {error && <div className="bg-destructive/10 border border-destructive/20 text-destructive text-xs rounded-lg px-3 py-2">{error}</div>}
             {isSignUp && <Input type="text" value={username} onChange={e => setUsername(e.target.value)} required minLength={3} placeholder="Nom d'utilisateur" className="bg-background border-border text-sm h-9 rounded-lg" />}

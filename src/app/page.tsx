@@ -11,6 +11,11 @@ import type { Category, Topic } from "@/lib/types"
 
 const ICONS: Record<string, string> = { code: "</>", gamepad: "🎮", music: "🎵", image: "🖼", globe: "🌐" }
 
+function fmt(n: number): string {
+  if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "k"
+  return String(n)
+}
+
 export default function HomePage() {
   const [categories, setCategories] = useState<Category[]>([])
   const [topics, setTopics] = useState<Topic[]>([])
@@ -29,59 +34,102 @@ export default function HomePage() {
 
   return (
     <div className="container-fluid content-constrain">
-      {/* ── Hero ── */}
+      {/* ══════════ HERO — Editorial, BIG, with personality ══════════ */}
       <ScrollReveal>
-        <section className="py-16 sm:py-20">
-          <div className="flex items-center gap-6 mb-6">
-            <div className="flex gap-5 text-sm font-mono text-muted-foreground">
-              <span><strong className="text-foreground text-lg">{stats.topics}</strong> sujets</span>
-              <span><strong className="text-foreground text-lg">{stats.posts}</strong> messages</span>
-              <span><strong className="text-foreground text-lg">{stats.users}</strong> membres</span>
+        <section className="section-gap relative overflow-hidden">
+          {/* Decorative accent */}
+          <div className="absolute top-6 right-0 text-8xl sm:text-9xl opacity-[0.03] select-none pointer-events-none" aria-hidden="true">
+            ✦
+          </div>
+
+          {/* Tagline */}
+          <div className="mb-8">
+            <span className="badge-warm inline-flex items-center gap-2 px-3 py-1">
+              <span className="text-[#F0C060]">✦</span> Le forum des passionnés
+            </span>
+          </div>
+
+          {/* Main heading — BIG, bold, editorial */}
+          <h1 className="font-display text-7xl sm:text-8xl font-bold tracking-tighter leading-[0.88] max-w-3xl mb-6">
+            4<span className="text-[#E85D3A]">×</span>4
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-secondary text-base sm:text-lg max-w-lg leading-relaxed mb-12">
+            Discussions structurées, communauté authentique, zéro distraction.
+          </p>
+
+          {/* Stats row — BIG numbers, tiny labels, warm terracotta */}
+          <div className="flex flex-wrap gap-8 sm:gap-12">
+            <div className="flex flex-col gap-1">
+              <span className="font-display text-4xl sm:text-5xl font-bold tracking-tighter text-[#E85D3A] tabular-nums">
+                {fmt(stats.topics)}
+              </span>
+              <span className="text-xs font-mono text-muted-foreground uppercase tracking-widest">Sujets</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="font-display text-4xl sm:text-5xl font-bold tracking-tighter text-[#E85D3A] tabular-nums">
+                {fmt(stats.posts)}
+              </span>
+              <span className="text-xs font-mono text-muted-foreground uppercase tracking-widest">Messages</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="font-display text-4xl sm:text-5xl font-bold tracking-tighter text-[#E85D3A] tabular-nums">
+                {fmt(stats.users)}
+              </span>
+              <span className="text-xs font-mono text-muted-foreground uppercase tracking-widest">Membres</span>
             </div>
           </div>
-          <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tighter leading-[0.92] max-w-3xl">
-            Le forum <span className="text-primary">structuré</span> pour les <span className="text-secondary">vraies</span> discussions
-          </h1>
-          <p className="text-muted-foreground text-base sm:text-lg mt-5 max-w-xl leading-relaxed">
-            Pas d&apos;algorithme, pas de publicité, pas de distraction. Juste des sujets, des gens, et du contenu.
-          </p>
+
+          {/* Subtle bottom accent line */}
+          <div className="mt-16 h-px bg-gradient-to-r from-[#E85D3A]/30 via-[#F0C060]/20 to-transparent w-full max-w-md" />
         </section>
       </ScrollReveal>
 
-      {/* ── Categories ── */}
+      {/* ══════════ CATEGORIES — Playful, airy, panel-interactive ══════════ */}
       <ScrollReveal delay={0.1}>
-        <section className="mb-16">
-          <div className="flex items-center justify-between mb-5">
-            <h2 className="font-display text-xl font-bold tracking-tight">Catégories</h2>
-            <span className="text-xs text-muted-foreground font-mono">{categories.length} espaces</span>
+        <section className="mb-24">
+          <div className="flex items-center gap-3 mb-8">
+            <span className="text-xl text-[#F0C060]">✦</span>
+            <h2 className="font-display text-2xl font-bold tracking-tight">Catégories</h2>
+            <span className="text-xs font-mono text-muted-foreground ml-2">{categories.length} espaces</span>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <StaggerReveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {categories.map(c => (
-              <Link key={c.id} href={`/c/${c.slug}`} className="cat-card group">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="size-10 rounded-xl flex items-center justify-center text-lg" style={{ background: `${c.color}15`, color: c.color }}>
+              <Link key={c.id} href={`/c/${c.slug}`} className="panel-interactive p-6 group flex flex-col gap-4">
+                {/* Larger icon container */}
+                <div className="flex items-start justify-between">
+                  <div
+                    className="size-12 rounded-2xl flex items-center justify-center text-xl shrink-0"
+                    style={{ background: `${c.color}15`, color: c.color }}
+                  >
                     {ICONS[c.icon] || "💬"}
                   </div>
-                  <div>
-                    <h3 className="font-display text-base font-bold group-hover:text-primary transition-colors">{c.name}</h3>
-                    <p className="text-xs text-muted-foreground font-mono">{c.topic_count} sujets</p>
-                  </div>
+                  <span className="badge-warm text-[10px]">{c.topic_count} sujets</span>
                 </div>
-                <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">{c.description}</p>
+                <div>
+                  <h3 className="font-display text-base font-bold group-hover:text-[#E85D3A] transition-colors mb-1.5">
+                    {c.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                    {c.description}
+                  </p>
+                </div>
               </Link>
             ))}
-          </div>
+          </StaggerReveal>
         </section>
       </ScrollReveal>
 
-      {/* ── Topics Table ── */}
+      {/* ══════════ TOPICS TABLE — Airy, badge-warm / badge-cool ══════════ */}
       <ScrollReveal delay={0.15}>
-        <section className="mb-16">
-          <div className="flex items-center justify-between mb-5">
-            <h2 className="font-display text-xl font-bold tracking-tight">Discussions récentes</h2>
+        <section className="mb-24">
+          <div className="flex items-center gap-3 mb-8">
+            <span className="text-xl">💬</span>
+            <h2 className="font-display text-2xl font-bold tracking-tight">Discussions récentes</h2>
           </div>
 
-          <div className="panel overflow-hidden glow-orange">
+          <div className="panel overflow-hidden glow-terracotta">
             <table className="topic-table">
               <thead>
                 <tr>
@@ -101,13 +149,29 @@ export default function HomePage() {
                     </td>
                     <td>
                       <div className="flex items-center gap-2 mb-0.5">
-                        {t.is_pinned && <Badge variant="outline" className="rounded-sm text-[9px] border-primary/40 text-primary h-3.5 px-1 font-mono">📌</Badge>}
-                        <Link href={`/t/${t.slug}`} className="font-semibold hover:text-primary transition-colors truncate">{t.title}</Link>
+                        {t.is_pinned && (
+                          <span className="badge-warm text-[10px] flex items-center gap-0.5 px-1.5 py-0.5">
+                            📌 Épinglé
+                          </span>
+                        )}
+                        <Link href={`/t/${t.slug}`} className="font-semibold hover:text-[#E85D3A] transition-colors truncate">
+                          {t.title}
+                        </Link>
                       </div>
                       <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                        <Link href={`/u/${t.author?.username}`} className="font-medium hover:text-foreground">{t.author?.display_name || t.author?.username}</Link>
-                        <span>·</span><TimeAgo date={t.created_at} />
-                        {t.category && <><span>·</span><span style={{ color: t.category.color }}>{t.category.name}</span></>}
+                        <Link href={`/u/${t.author?.username}`} className="font-medium hover:text-foreground">
+                          {t.author?.display_name || t.author?.username}
+                        </Link>
+                        <span>·</span>
+                        <TimeAgo date={t.created_at} />
+                        {t.category && (
+                          <>
+                            <span>·</span>
+                            <Link href={`/c/${t.category.slug}`} className="badge-cool text-[10px] hover:opacity-80 transition-opacity">
+                              {t.category.name}
+                            </Link>
+                          </>
+                        )}
                       </div>
                     </td>
                     <td className="col-stats">
@@ -123,19 +187,29 @@ export default function HomePage() {
                             {(t.last_reply_author.display_name || t.last_reply_author.username || "?")[0].toUpperCase()}
                           </div>
                           <div className="min-w-0">
-                            <span className="truncate block text-muted-foreground">{t.last_reply_author.display_name || t.last_reply_author.username}</span>
-                            <span className="text-muted-foreground/60"><TimeAgo date={t.last_reply_at!} /></span>
+                            <span className="truncate block text-muted-foreground">
+                              {t.last_reply_author.display_name || t.last_reply_author.username}
+                            </span>
+                            <span className="text-muted-foreground/60">
+                              <TimeAgo date={t.last_reply_at!} />
+                            </span>
                           </div>
                         </div>
                       ) : (
-                        <span className="text-xs text-muted-foreground/60"><TimeAgo date={t.created_at} /></span>
+                        <span className="text-xs text-muted-foreground/60">
+                          <TimeAgo date={t.created_at} />
+                        </span>
                       )}
                     </td>
                   </tr>
                 )) : (
                   <tr>
                     <td colSpan={4} className="text-center py-16 text-muted-foreground">
-                      Aucun sujet. <Link href="/new" className="text-primary hover:underline font-medium">Lancez la première discussion</Link>.
+                      Aucun sujet.{" "}
+                      <Link href="/new" className="text-[#E85D3A] hover:underline font-medium">
+                        Lancez la première discussion
+                      </Link>
+                      .
                     </td>
                   </tr>
                 )}

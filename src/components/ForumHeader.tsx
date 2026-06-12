@@ -45,9 +45,14 @@ export function ForumHeader() {
       }`}
     >
       <div className="flex items-center justify-between h-14 px-4 sm:px-6 lg:px-8 max-w-full">
-        {/* Logo */}
-        <Link href="/" className="font-display text-lg font-bold tracking-tight hover:text-primary transition-colors shrink-0">
-          4by4
+        {/* Logo — Sunset Grid branded */}
+        <Link href="/" className="flex flex-col items-start shrink-0 hover:text-primary transition-colors group">
+          <span className="font-display text-lg font-bold tracking-tight">
+            4×4
+          </span>
+          <span className="hidden sm:block text-[10px] text-muted-foreground font-mono leading-none -mt-0.5">
+            forum
+          </span>
         </Link>
 
         {/* Center: Search */}
@@ -70,13 +75,13 @@ export function ForumHeader() {
               {/* New topic button */}
               <Link href="/new" className="hidden sm:inline-flex">
                 <Button size="default" className="rounded-lg bg-primary hover:bg-primary/90 font-semibold text-sm px-5 h-10">
-                  + Nouveau sujet
+                  ✦ Nouveau sujet
                 </Button>
               </Link>
 
               {/* User avatar + name */}
               <Link href={`/u/${profile.username}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity ml-1">
-                <div className="size-8 rounded-full bg-primary/15 border border-primary/30 flex items-center justify-center text-xs font-bold text-primary">
+                <div className="size-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-xs font-bold text-primary">
                   {(profile.display_name || profile.username)[0].toUpperCase()}
                 </div>
                 <span className="hidden lg:inline text-[13px] font-medium text-muted-foreground">{profile.display_name || profile.username}</span>
@@ -96,7 +101,7 @@ export function ForumHeader() {
               </Link>
               <Link href="/new">
                 <Button size="default" className="rounded-lg bg-primary hover:bg-primary/90 font-semibold text-sm px-6 h-10">
-                  + Nouveau sujet
+                  ✦ Nouveau sujet
                 </Button>
               </Link>
             </>

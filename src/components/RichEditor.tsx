@@ -14,7 +14,7 @@ import HorizontalRule from "@tiptap/extension-horizontal-rule"
 import { useState, useCallback } from "react"
 import { createClient } from "@/lib/supabase/client"
 
-const COLORS = ["#FF4D1C", "#00D4AA", "#6366F1", "#F59E0B", "#EC4899", "#FFFFFF", "#9A9BA0"]
+const COLORS = ["#E85D3A", "#0DC5B0", "#F0C060", "#6366F1", "#F59E0B", "#EC4899", "#FFFFFF", "#9A9BA0"]
 
 export function RichEditor({ content, onChange, placeholder = "Écrivez…" }: { content: string; onChange: (html: string) => void; placeholder?: string }) {
   const [uploading, setUploading] = useState(false)

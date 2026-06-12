@@ -46,7 +46,7 @@ export function GlobalSearch() {
 
   if (!open) return (
     <button onClick={() => { setOpen(true); setTimeout(() => inputRef.current?.focus(), 50) }}
-      className="flex items-center gap-2 h-9 px-3 rounded-lg border border-border bg-card/50 text-muted-foreground text-xs hover:border-primary/30 hover:text-foreground transition-all w-48 sm:w-56">
+      className="flex items-center gap-2 h-9 px-3 rounded-lg border border-[var(--border-visible)] bg-card/50 text-muted-foreground text-xs hover:border-primary/30 focus:border-primary focus:ring-1 focus:ring-primary/20 hover:text-foreground transition-all w-48 sm:w-56">
       <svg className="size-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       <span className="truncate">Rechercher…</span>
       <kbd className="hidden sm:inline-flex items-center gap-0.5 ml-auto text-[9px] font-mono text-muted-foreground/50 bg-muted rounded px-1 h-4 border border-border">⌘K</kbd>
