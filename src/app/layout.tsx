@@ -1,32 +1,32 @@
 import type { Metadata } from "next"
-import { Playfair_Display, DM_Sans, JetBrains_Mono } from "next/font/google"
+import { Space_Grotesk, Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { Navbar } from "@/components/Navbar"
 
-const playfair = Playfair_Display({
+const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 })
 
-const dmSans = DM_Sans({
+const geist = Geist({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 })
 
-const jetbrains = JetBrains_Mono({
+const geistMono = Geist_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
 })
 
 export const metadata: Metadata = {
-  title: "Carré — Le forum",
-  description: "Un espace de discussion élégant et minimaliste.",
+  title: "4by4 — Forum",
+  description: "Un forum brut, rapide, sans distraction.",
   openGraph: {
-    title: "Carré — Le forum",
-    description: "Un espace de discussion élégant et minimaliste.",
+    title: "4by4 — Forum",
+    description: "Un forum brut, rapide, sans distraction.",
     type: "website",
   },
 }
@@ -39,9 +39,9 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${playfair.variable} ${dmSans.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} ${geist.variable} ${geistMono.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-noir text-text-primary">
+      <body className="min-h-full flex flex-col bg-background text-foreground">
         <Navbar />
         <main className="flex-1">{children}</main>
       </body>
