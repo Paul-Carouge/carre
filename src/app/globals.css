@@ -2,88 +2,101 @@
 @import "tw-animate-css";
 
 /* ═══════════════════════════════════
-   4by4 — Design System
-   Pure void + Electric Lime
+   4by4 — Identity System
+   Grid · Raw · Structured
+   Off-black + Off-white + Coral
    ═══════════════════════════════════ */
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-display: 'Cabinet Grotesk', system-ui, sans-serif;
   --font-body: 'Geist', system-ui, sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, monospace;
 }
 
-/* ── shadcn/ui dark theme (always dark — no light mode) ── */
+/* ── shadcn/ui tokens ── */
 :root {
   --radius: 0.5rem;
 
-  /* Background hierarchy */
-  --background: #000000;
-  --foreground: #FAFAFA;
-  --card: #0A0A0A;
-  --card-foreground: #FAFAFA;
-  --popover: #0D0D0D;
-  --popover-foreground: #FAFAFA;
+  /* Off-white base */
+  --background: #F9F8F6;
+  --foreground: #131315;
 
-  /* Primary — Electric Lime */
-  --primary: #CCFF00;
-  --primary-foreground: #000000;
+  /* Cards & surfaces */
+  --card: #FFFFFF;
+  --card-foreground: #131315;
+  --popover: #FFFFFF;
+  --popover-foreground: #131315;
 
-  /* Secondary */
-  --secondary: #1A1A1A;
-  --secondary-foreground: #FAFAFA;
+  /* Primary — Coral */
+  --primary: #FF4D1C;
+  --primary-foreground: #FFFFFF;
+
+  /* Off-black surfaces */
+  --secondary: #131315;
+  --secondary-foreground: #F9F8F6;
 
   /* Muted */
-  --muted: #141414;
-  --muted-foreground: #A1A1A1;
+  --muted: #F3F1ED;
+  --muted-foreground: #6B6762;
 
   /* Accent */
-  --accent: #1A1A1A;
-  --accent-foreground: #FAFAFA;
+  --accent: #F3F1ED;
+  --accent-foreground: #131315;
 
   /* Semantic */
-  --destructive: #FF4444;
-  --destructive-foreground: #FAFAFA;
-  --success: #00E676;
-  --success-foreground: #000000;
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFFFF;
+  --success: #16A34A;
+  --success-foreground: #FFFFFF;
 
-  /* Borders & Inputs */
-  --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.06);
-  --ring: #CCFF00;
+  /* Borders */
+  --border: #E8E6E1;
+  --input: #E8E6E1;
+  --ring: #FF4D1C;
+
+  /* Sidebar — off-black */
+  --sidebar-background: #131315;
+  --sidebar-foreground: #F9F8F6;
+  --sidebar-primary: #FF4D1C;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #222225;
+  --sidebar-accent-foreground: #F9F8F6;
+  --sidebar-border: #2A2A2D;
+  --sidebar-ring: #FF4D1C;
 
   /* Charts */
-  --chart-1: #CCFF00;
-  --chart-2: #00E676;
-  --chart-3: #448AFF;
-  --chart-4: #FFD740;
-  --chart-5: #FF6E40;
+  --chart-1: #FF4D1C;
+  --chart-2: #131315;
+  --chart-3: #3B82F6;
+  --chart-4: #F59E0B;
+  --chart-5: #8B5CF6;
+}
 
-  /* Sidebar */
-  --sidebar-background: #0A0A0A;
-  --sidebar-foreground: #FAFAFA;
-  --sidebar-primary: #CCFF00;
-  --sidebar-primary-foreground: #000000;
-  --sidebar-accent: #1A1A1A;
-  --sidebar-accent-foreground: #FAFAFA;
-  --sidebar-border: rgba(255, 255, 255, 0.06);
-  --sidebar-ring: #CCFF00;
-
-  /* Typography scale */
-  --font-size-xs: 0.6875rem;
-  --font-size-sm: 0.8125rem;
-  --font-size-base: 0.9375rem;
-  --font-size-lg: 1.0625rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 2rem;
-  --font-size-4xl: 2.75rem;
-  --font-size-5xl: 4rem;
+/* ── Dark mode overrides (for dark sections only) ── */
+.dark {
+  --background: #131315;
+  --foreground: #F9F8F6;
+  --card: #1A1A1D;
+  --card-foreground: #F9F8F6;
+  --popover: #1A1A1D;
+  --popover-foreground: #F9F8F6;
+  --primary: #FF6B3D;
+  --primary-foreground: #FFFFFF;
+  --secondary: #222225;
+  --secondary-foreground: #F9F8F6;
+  --muted: #222225;
+  --muted-foreground: #9E9B96;
+  --accent: #222225;
+  --accent-foreground: #F9F8F6;
+  --border: #2A2A2D;
+  --input: #2A2A2D;
+  --ring: #FF6B3D;
 }
 
 /* ═══════════════════════════════════
-   Base Styles
+   Base
    ═══════════════════════════════════ */
 
 * {
@@ -99,79 +112,101 @@ body {
   font-feature-settings: "ss03", "cv01", "calt";
 }
 
-/* ── Typography ── */
 h1, h2, h3, h4, .font-display {
   font-family: var(--font-display);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.025em;
   font-weight: 700;
 }
 
-/* ── Selection ── */
 ::selection {
-  background: rgba(204, 255, 0, 0.2);
-  color: #CCFF00;
+  background: rgba(255, 77, 28, 0.15);
+  color: #FF4D1C;
 }
 
-/* ── Scrollbar ── */
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.18);
-}
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #D0CDC8; }
 
-/* ── Focus ── */
 :focus-visible {
-  outline: 2px solid #CCFF00;
+  outline: 2px solid #FF4D1C;
   outline-offset: 2px;
 }
 
 /* ═══════════════════════════════════
-   Utilities
+   4by4 Identity Utilities
    ═══════════════════════════════════ */
 
-.glass-panel {
-  background: var(--card);
+.grid-4by4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
   border: 1px solid var(--border);
-  backdrop-filter: blur(16px);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.grid-4by4 > * {
+  background: var(--card);
+  padding: 1.25rem;
 }
 
-.glow-lime {
-  box-shadow: 0 0 40px rgba(204, 255, 0, 0.06);
+.panel-offwhite {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.panel-offblack {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.section-number {
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary);
 }
 
 .hover-lift {
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .hover-lift:hover {
   transform: translateY(-2px);
-  border-color: rgba(204, 255, 0, 0.3);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
 }
 
-/* ── Link underline animation ── */
-.link-underline {
+.accent-line {
   position: relative;
 }
-.link-underline::after {
+.accent-line::before {
   content: '';
   position: absolute;
-  bottom: -2px;
+  top: 0;
   left: 0;
-  width: 0;
-  height: 1px;
-  background: #CCFF00;
-  transition: width 0.2s ease;
+  width: 3px;
+  height: 100%;
+  background: var(--primary);
+  border-radius: 2px;
 }
-.link-underline:hover::after {
-  width: 100%;
+
+/* ── Links ── */
+.link-4by4 {
+  color: var(--foreground);
+  text-decoration: none;
+  background-image: linear-gradient(var(--primary), var(--primary));
+  background-size: 0% 1.5px;
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.2s ease;
+}
+.link-4by4:hover {
+  background-size: 100% 1.5px;
 }
 
 /* ── Prose for forum posts ── */
@@ -180,31 +215,32 @@ h1, h2, h3, h4, .font-display {
   line-height: 1.75;
   font-size: 0.9375rem;
 }
-.prose-4by4 p {
-  margin-bottom: 0.875rem;
-}
-.prose-4by4 p:last-child {
-  margin-bottom: 0;
-}
+.prose-4by4 p { margin-bottom: 0.75rem; }
+.prose-4by4 p:last-child { margin-bottom: 0; }
 .prose-4by4 code {
   background: var(--muted);
   padding: 0.125rem 0.375rem;
-  border-radius: 4px;
+  border-radius: 3px;
   font-family: var(--font-mono);
   font-size: 0.825em;
 }
 .prose-4by4 pre {
-  background: var(--card);
-  border: 1px solid var(--border);
+  background: #131315;
+  color: #F9F8F6;
   border-radius: var(--radius);
   padding: 1rem;
   overflow-x: auto;
   margin: 1rem 0;
 }
 .prose-4by4 blockquote {
-  border-left: 2px solid #CCFF00;
+  border-left: 3px solid var(--primary);
   padding-left: 1rem;
   color: var(--muted-foreground);
+  margin: 1rem 0;
+}
+.prose-4by4 img {
+  border-radius: var(--radius);
+  max-width: 100%;
   margin: 1rem 0;
 }
 
@@ -228,19 +264,6 @@ h1, h2, h3, h4, .font-display {
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar-background);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
