@@ -1,8 +1,8 @@
 import { createClient } from "@/lib/supabase/server"
 import { notFound } from "next/navigation"
-import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Separator } from "@/components/ui/separator"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { TimeAgo } from "@/components/TimeAgo"
 import { ReplyForm } from "./ReplyForm"
 import { LikeButton } from "@/components/LikeButton"
@@ -37,67 +37,74 @@ export default async function TopicPage({ params }: { params: Promise<{ slug: st
   }))
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-12">
-      <nav className="flex items-center gap-2 text-[11px] text-muted-foreground mb-8 font-mono uppercase tracking-wider">
-        <Link href="/" className="hover:text-primary transition-colors">← Forum</Link>
-        {t.category && <><span>/</span><Link href={`/c/${t.category.slug}`} className="hover:text-primary transition-colors">{t.category.name}</Link></>}
-      </nav>
+    <div className="p-4 sm:p-6">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-1.5 text-[12px] text-muted-foreground mb-5 font-mono">
+        <Link href="/" className="hover:text-foreground">Accueil</Link>
+        <span>/</span>
+        {t.category && <><Link href={`/c/${t.category.slug}`} className="hover:text-foreground">{t.category.name}</Link><span>/</span></>}
+        <span className="text-foreground/70 truncate">{t.title}</span>
+      </div>
 
       {/* Topic Header */}
-      <div className="mb-10">
-        <div className="flex items-center gap-2 mb-3">
-          {t.is_pinned && <Badge variant="outline" className="rounded-full text-[9px] border-primary/30 text-primary">📌 Épinglé</Badge>}
-          {t.is_locked && <Badge variant="outline" className="rounded-full text-[9px]">🔒 Fermé</Badge>}
-          {t.category && <Badge className="rounded-full text-[9px]" style={{ background: `${t.category.color}15`, color: t.category.color }}>{t.category.name}</Badge>}
+      <div className="bg-card border border-border rounded-lg p-5 mb-0 rounded-b-none">
+        <div className="flex items-center gap-2 mb-2">
+          {t.is_pinned && <Badge variant="outline" className="rounded-sm text-[9px] border-primary/30 text-primary h-4">📌 Épinglé</Badge>}
+          {t.is_locked && <Badge variant="outline" className="rounded-sm text-[9px] h-4">🔒 Fermé</Badge>}
+          {t.category && <Badge className="rounded-sm text-[9px] h-4" style={{ background: `${t.category.color}15`, color: t.category.color }}>{t.category.name}</Badge>}
         </div>
-        <h1 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tighter leading-[1.05] mb-4">{t.title}</h1>
-        <div className="flex items-center gap-3 text-xs text-muted-foreground">
-          <Avatar className="size-6 ring-1 ring-border"><AvatarImage src={t.author?.avatar_url || undefined} /><AvatarFallback className="text-[9px] bg-muted font-bold">{(t.author?.display_name || t.author?.username || "?")[0].toUpperCase()}</AvatarFallback></Avatar>
-          <Link href={`/u/${t.author?.username}`} className="font-semibold text-foreground hover:text-primary transition-colors">{t.author?.display_name || t.author?.username}</Link>
-          <Separator orientation="vertical" className="h-3 bg-border" />
+        <h1 className="font-display text-2xl">{t.title}</h1>
+        <div className="flex items-center gap-3 text-[12px] text-muted-foreground mt-3">
+          <Avatar className="size-6 ring-1 ring-border"><AvatarImage src={t.author?.avatar_url || undefined} /><AvatarFallback className="text-[8px] bg-muted font-bold">{(t.author?.display_name || t.author?.username || "?")[0].toUpperCase()}</AvatarFallback></Avatar>
+          <Link href={`/u/${t.author?.username}`} className="font-medium text-foreground hover:underline">{t.author?.display_name || t.author?.username}</Link>
+          <span>·</span>
           <TimeAgo date={t.created_at} />
-          <Separator orientation="vertical" className="h-3 bg-border" />
+          <span>·</span>
           <span className="font-mono">{t.view_count} vues</span>
-          <Separator orientation="vertical" className="h-3 bg-border" />
+          <span>·</span>
           <span className="font-mono">{t.reply_count} réponses</span>
         </div>
       </div>
 
       {/* Posts */}
-      <div className="space-y-0">
+      <div className="bg-card border-x border-border">
         {postsWithLikes.map((post, i) => (
-          <div key={post.id} id={`post-${post.id}`} className={`py-5 ${i > 0 ? "border-t border-border" : ""}`}>
-            <div className="flex gap-4">
-              <Link href={`/u/${post.author?.username}`} className="shrink-0">
-                <Avatar className="size-9 ring-1 ring-border mt-0.5 hover:ring-primary/50 transition-all">
+          <div key={post.id} id={`post-${post.id}`} className="post-layout px-5">
+            {/* User card — left */}
+            <div className="text-center">
+              <Link href={`/u/${post.author?.username}`}>
+                <Avatar className="size-14 ring-1 ring-border mx-auto mb-2">
                   <AvatarImage src={post.author?.avatar_url || undefined} />
-                  <AvatarFallback className="bg-muted text-[11px] font-bold text-muted-foreground">
-                    {(post.author?.display_name || post.author?.username || "?")[0].toUpperCase()}
-                  </AvatarFallback>
+                  <AvatarFallback className="bg-muted text-sm font-bold">{(post.author?.display_name || post.author?.username || "?")[0].toUpperCase()}</AvatarFallback>
                 </Avatar>
               </Link>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-3">
-                  <Link href={`/u/${post.author?.username}`} className="text-sm font-semibold hover:text-primary transition-colors">
-                    {post.author?.display_name || post.author?.username}
-                  </Link>
-                  <span className="text-[11px] text-muted-foreground font-mono"><TimeAgo date={post.created_at} /></span>
-                  {post.is_edited && <span className="text-[10px] text-muted-foreground italic">modifié</span>}
-                </div>
-                <div className="prose-4by4" dangerouslySetInnerHTML={{ __html: post.content }} />
-                <div className="flex items-center gap-3 mt-4 pt-3 border-t border-border/50">
-                  <LikeButton post={post} />
-                </div>
+              <Link href={`/u/${post.author?.username}`} className="text-[13px] font-semibold hover:underline block">{post.author?.display_name || post.author?.username}</Link>
+              <span className="text-[10px] text-muted-foreground font-mono">@{post.author?.username}</span>
+              <div className="mt-2 flex flex-col gap-0.5 text-[10px] text-muted-foreground font-mono">
+                <span>{post.author?.post_count || 0} msg</span>
+                <span>{post.author?.like_count || 0} ❤️</span>
+              </div>
+            </div>
+
+            {/* Post content — right */}
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 text-[11px] text-muted-foreground mb-3 font-mono">
+                <TimeAgo date={post.created_at} />
+                {post.is_edited && <span className="italic">(modifié)</span>}
+              </div>
+              <div className="prose-forum" dangerouslySetInnerHTML={{ __html: post.content }} />
+              <div className="flex items-center gap-3 mt-4 pt-3 border-t border-border/50">
+                <LikeButton post={post} />
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="mt-16">
-        <Separator className="mb-8" />
+      {/* Reply */}
+      <div className="bg-card border border-border rounded-lg rounded-t-none p-5 mt-0">
         {!t.is_locked ? <ReplyForm topicId={t.id} /> : (
-          <div className="panel-offwhite rounded-xl p-8 text-center text-sm text-muted-foreground">🔒 Cette discussion est fermée.</div>
+          <p className="text-sm text-muted-foreground text-center py-4">🔒 Cette discussion est fermée.</p>
         )}
       </div>
     </div>

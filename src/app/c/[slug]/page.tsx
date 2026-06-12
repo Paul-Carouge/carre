@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server"
 import { notFound } from "next/navigation"
-import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import type { Category, Topic } from "@/lib/types"
@@ -10,58 +10,70 @@ import { TimeAgo } from "@/components/TimeAgo"
 export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const supabase = await createClient()
+
   const { data: category } = await supabase.from("categories").select("*").eq("slug", slug).single()
   if (!category) notFound()
-
   const cat = category as Category
+
   const { data: topics } = await supabase.from("topics")
     .select(`*, author:profiles!topics_author_id_fkey(*), category:categories(*), last_reply_author:profiles!topics_last_reply_by_fkey(*)`)
     .eq("category_id", cat.id).order("is_pinned", { ascending: false })
-    .order("last_reply_at", { ascending: false, nullsFirst: false }).limit(30).throwOnError()
+    .order("last_reply_at", { ascending: false, nullsFirst: false }).limit(50).throwOnError()
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-12">
-      <nav className="flex items-center gap-2 text-[11px] text-muted-foreground mb-8 font-mono uppercase tracking-wider">
-        <Link href="/" className="hover:text-primary transition-colors">← Forum</Link><span>/</span><span className="text-foreground">{cat.name}</span>
-      </nav>
+    <div className="p-4 sm:p-6">
+      <div className="flex items-center gap-1.5 text-[12px] text-muted-foreground mb-5 font-mono">
+        <Link href="/" className="hover:text-foreground">Accueil</Link><span>/</span><span className="text-foreground">{cat.name}</span>
+      </div>
 
-      <div className="panel-offwhite rounded-xl p-6 mb-10">
-        <div className="flex items-center gap-4 mb-3">
-          <div className="size-14 rounded-xl flex items-center justify-center text-2xl" style={{ background: `${cat.color}12`, color: cat.color }}>
+      <div className="bg-card border border-border rounded-lg p-5 mb-6">
+        <div className="flex items-center gap-3 mb-3">
+          <div className="size-10 rounded-lg flex items-center justify-center text-lg" style={{ background: `${cat.color}12`, color: cat.color }}>
             {cat.icon === "code" ? "</>" : cat.icon === "gamepad" ? "🎮" : cat.icon === "music" ? "🎵" : cat.icon === "image" ? "🖼" : cat.icon === "globe" ? "🌐" : "💬"}
           </div>
           <div>
-            <h1 className="font-display text-2xl font-extrabold tracking-tight">{cat.name}</h1>
-            <p className="text-xs text-muted-foreground mt-1 font-mono">{cat.topic_count} sujet{cat.topic_count !== 1 ? "s" : ""}</p>
+            <h1 className="font-display text-xl">{cat.name}</h1>
+            <p className="text-[11px] text-muted-foreground font-mono">{cat.topic_count} sujets</p>
           </div>
         </div>
-        {cat.description && <p className="text-sm text-muted-foreground">{cat.description}</p>}
+        {cat.description && <p className="text-[13px] text-muted-foreground">{cat.description}</p>}
       </div>
 
-      {topics && topics.length > 0 ? (
-        <div className="divide-y divide-border">
-          {(topics as Topic[]).map(t => (
-            <Link key={t.id} href={`/t/${t.slug}`} className="flex items-center gap-4 group py-3.5 px-2 -mx-2 rounded-lg hover:bg-muted/40 transition-colors">
-              <Avatar className="size-8 ring-1 ring-border shrink-0"><AvatarImage src={t.author?.avatar_url || undefined} /><AvatarFallback className="bg-muted text-[10px] font-bold">{(t.author?.display_name || t.author?.username || "?")[0].toUpperCase()}</AvatarFallback></Avatar>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-0.5">
-                  {t.is_pinned && <Badge variant="outline" className="rounded-full text-[9px] border-primary/30 text-primary h-4">📌</Badge>}
-                  <p className="text-sm font-semibold group-hover:text-primary transition-colors truncate">{t.title}</p>
+      <div className="bg-card border border-border rounded-lg overflow-hidden">
+        <div className="topic-row text-[10px] font-semibold uppercase tracking-wider text-muted-foreground bg-muted/50 px-4 font-mono">
+          <span>Sujet</span><span className="text-center">Stats</span><span className="last-post-col">Dernier message</span>
+        </div>
+        {(topics as Topic[]).length > 0 ? (topics as Topic[]).map(topic => (
+          <div key={topic.id} className="topic-row px-4 group">
+            <div className="flex items-center gap-3 min-w-0">
+              <Avatar className="size-8 ring-1 ring-border shrink-0"><AvatarImage src={topic.author?.avatar_url || undefined} /><AvatarFallback className="bg-muted text-[10px] font-bold">{(topic.author?.display_name || topic.author?.username || "?")[0].toUpperCase()}</AvatarFallback></Avatar>
+              <div className="min-w-0">
+                <div className="flex items-center gap-1.5">
+                  {topic.is_pinned && <Badge variant="outline" className="rounded-sm text-[9px] border-primary/30 text-primary h-4 px-1">📌</Badge>}
+                  <Link href={`/t/${topic.slug}`} className="text-[13px] font-semibold hover:underline truncate">{topic.title}</Link>
                 </div>
-                <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
-                  <span className="font-medium text-foreground/70">{t.author?.display_name || t.author?.username}</span><span>·</span><TimeAgo date={t.created_at} />
+                <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground mt-0.5">
+                  <span>par</span><Link href={`/u/${topic.author?.username}`} className="font-medium hover:underline">{topic.author?.display_name || topic.author?.username}</Link>
+                  <span>·</span><TimeAgo date={topic.created_at} />
                 </div>
               </div>
-              <span className="font-mono text-xs text-muted-foreground tabular-nums shrink-0">{t.reply_count}</span>
-            </Link>
-          ))}
-        </div>
-      ) : (
-        <div className="panel-offwhite rounded-xl p-12 text-center">
-          <p className="text-muted-foreground mb-4 text-sm">Aucun sujet ici.</p>
-          <Link href="/new"><Button variant="outline" size="sm" className="rounded-full text-xs">Créer le premier</Button></Link>
-        </div>
-      )}
+            </div>
+            <div className="flex items-center justify-center gap-3 text-[11px] text-muted-foreground font-mono">
+              <span>{topic.reply_count} rép.</span><span>{topic.view_count} vues</span>
+            </div>
+            <div className="last-post-col flex items-center gap-2 text-[11px]">
+              {topic.last_reply_author ? (
+                <>
+                  <Avatar className="size-5 ring-1 ring-border"><AvatarImage src={topic.last_reply_author.avatar_url || undefined} /><AvatarFallback className="text-[7px] bg-muted font-bold">{(topic.last_reply_author.display_name || topic.last_reply_author.username || "?")[0].toUpperCase()}</AvatarFallback></Avatar>
+                  <div className="min-w-0"><span className="truncate block text-foreground/70">{topic.last_reply_author.display_name || topic.last_reply_author.username}</span><span className="text-muted-foreground"><TimeAgo date={topic.last_reply_at!} /></span></div>
+                </>
+              ) : <span className="text-muted-foreground"><TimeAgo date={topic.created_at} /></span>}
+            </div>
+          </div>
+        )) : (
+          <div className="p-8 text-center text-sm text-muted-foreground">Aucun sujet. <Link href="/new" className="text-primary hover:underline">Créez le premier</Link>.</div>
+        )}
+      </div>
     </div>
   )
 }

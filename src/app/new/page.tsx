@@ -38,36 +38,34 @@ export default function NewTopicPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-6 py-12">
-      <p className="section-number mb-2">Nouveau</p>
-      <h1 className="font-display text-3xl font-extrabold tracking-tighter mb-8">Créer un sujet</h1>
-      <form onSubmit={handleSubmit} className="space-y-5">
-        {error && <div className="bg-destructive/10 border border-destructive/20 text-destructive text-xs rounded-lg px-4 py-3">{error}</div>}
+    <div className="p-4 sm:p-6 max-w-2xl">
+      <div className="flex items-center gap-1.5 text-[12px] text-muted-foreground mb-5 font-mono">
+        <span className="text-foreground">Nouveau sujet</span>
+      </div>
+      <h1 className="font-display text-2xl mb-6">Créer une discussion</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {error && <div className="bg-destructive/10 border border-destructive/20 text-destructive text-[12px] rounded-md px-3 py-2">{error}</div>}
         <div>
-          <label className="block text-xs font-medium text-muted-foreground mb-2 font-mono uppercase tracking-wider">Catégorie</label>
+          <label className="block text-[11px] font-semibold text-muted-foreground mb-1.5 font-mono uppercase tracking-wider">Catégorie</label>
           <select value={categoryId} onChange={e => setCategoryId(e.target.value)}
-            className="w-full panel-offwhite rounded-xl px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary">
+            className="w-full bg-card border border-border rounded-md px-3 py-2 text-[13px] focus:outline-none focus:ring-1 focus:ring-primary">
             <option value="">Sans catégorie</option>
             {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-medium text-muted-foreground mb-2 font-mono uppercase tracking-wider">Titre</label>
+          <label className="block text-[11px] font-semibold text-muted-foreground mb-1.5 font-mono uppercase tracking-wider">Titre</label>
           <Input value={title} onChange={e => setTitle(e.target.value)} required minLength={5}
-            placeholder="Titre de la discussion" className="panel-offwhite text-sm h-11 rounded-xl" />
+            placeholder="Titre de la discussion" className="bg-card border-border text-[13px] h-10 rounded-md" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-muted-foreground mb-2 font-mono uppercase tracking-wider">Message</label>
+          <label className="block text-[11px] font-semibold text-muted-foreground mb-1.5 font-mono uppercase tracking-wider">Message</label>
           <RichEditor content={content} onChange={setContent} placeholder="Votre message…" />
         </div>
         <div className="flex items-center gap-3 pt-2">
           <Button type="submit" disabled={submitting || !title.trim() || !content.trim()}
-            className="rounded-full bg-primary hover:bg-primary/90 font-semibold text-sm">
-            {submitting ? "Publication…" : "Publier le sujet"}
-          </Button>
-          <Button type="button" variant="ghost" onClick={() => router.back()} className="rounded-full text-sm text-muted-foreground">
-            Annuler
-          </Button>
+            className="rounded-md bg-primary hover:bg-primary/90 text-sm h-9">{submitting ? "Publication…" : "Publier"}</Button>
+          <Button type="button" variant="ghost" onClick={() => router.back()} className="rounded-md text-sm text-muted-foreground h-9">Annuler</Button>
         </div>
       </form>
     </div>

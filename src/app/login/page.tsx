@@ -9,7 +9,7 @@ import Link from "next/link"
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="min-h-[80vh] flex items-center justify-center"><div className="size-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin" /></div>}>
+    <Suspense fallback={<div className="min-h-[60vh] flex items-center justify-center"><div className="size-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" /></div>}>
       <LoginForm />
     </Suspense>
   )
@@ -45,34 +45,25 @@ function LoginForm() {
   }
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-6">
-      <div className="w-full max-w-xs">
-        <div className="text-center mb-10">
-          <Link href="/" className="font-display text-4xl font-extrabold tracking-tighter text-foreground">
-            4by<span className="text-primary">4</span>
-          </Link>
-          <p className="text-muted-foreground text-[11px] mt-2 font-mono uppercase tracking-wider">
-            {isSignUp ? "Créer un compte" : "Connexion"}
-          </p>
+    <div className="min-h-[70vh] flex items-center justify-center p-6">
+      <div className="w-full max-w-sm">
+        <div className="text-center mb-8">
+          <Link href="/" className="font-display text-3xl text-foreground">4by4</Link>
+          <p className="text-[11px] text-muted-foreground mt-2 font-mono uppercase tracking-wider">{isSignUp ? "Inscription" : "Connexion"}</p>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {error && <div className="bg-destructive/10 border border-destructive/20 text-destructive text-xs rounded-lg px-4 py-3">{error}</div>}
-          {isSignUp && <Input type="text" value={username} onChange={e => setUsername(e.target.value)} required minLength={3}
-            placeholder="Nom d'utilisateur" className="panel-offwhite text-sm h-10 rounded-xl" />}
-          <Input type="email" value={email} onChange={e => setEmail(e.target.value)} required
-            placeholder="Email" className="panel-offwhite text-sm h-10 rounded-xl" />
-          <Input type="password" value={password} onChange={e => setPassword(e.target.value)} required minLength={6}
-            placeholder="Mot de passe" className="panel-offwhite text-sm h-10 rounded-xl" />
-          <Button type="submit" disabled={loading} className="w-full rounded-full bg-primary hover:bg-primary/90 font-semibold h-10 text-sm">
-            {loading ? "…" : isSignUp ? "Créer le compte" : "Se connecter"}
-          </Button>
-          <p className="text-center text-[11px] text-muted-foreground">
-            {isSignUp ? "Déjà inscrit ?" : "Pas de compte ?"}{" "}
-            <button type="button" onClick={() => setIsSignUp(!isSignUp)} className="text-primary hover:underline font-medium">
-              {isSignUp ? "Se connecter" : "S'inscrire"}
-            </button>
-          </p>
-        </form>
+        <div className="bg-card border border-border rounded-lg p-5">
+          <form onSubmit={handleSubmit} className="space-y-3">
+            {error && <div className="bg-destructive/10 border border-destructive/20 text-destructive text-[12px] rounded-md px-3 py-2">{error}</div>}
+            {isSignUp && <Input type="text" value={username} onChange={e => setUsername(e.target.value)} required minLength={3} placeholder="Nom d'utilisateur" className="bg-background text-[13px] h-9 rounded-md" />}
+            <Input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="Email" className="bg-background text-[13px] h-9 rounded-md" />
+            <Input type="password" value={password} onChange={e => setPassword(e.target.value)} required minLength={6} placeholder="Mot de passe" className="bg-background text-[13px] h-9 rounded-md" />
+            <Button type="submit" disabled={loading} className="w-full rounded-md bg-primary hover:bg-primary/90 text-sm h-9">{loading ? "…" : isSignUp ? "Créer le compte" : "Se connecter"}</Button>
+          </form>
+        </div>
+        <p className="text-center text-[12px] text-muted-foreground mt-4">
+          {isSignUp ? "Déjà inscrit ?" : "Pas de compte ?"}{" "}
+          <button type="button" onClick={() => setIsSignUp(!isSignUp)} className="text-primary hover:underline font-medium">{isSignUp ? "Se connecter" : "S'inscrire"}</button>
+        </p>
       </div>
     </div>
   )

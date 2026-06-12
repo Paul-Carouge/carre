@@ -34,7 +34,7 @@ export function RichEditor({
     onUpdate: ({ editor }) => onChange(editor.getHTML()),
     editorProps: {
       attributes: {
-        class: "prose-4by4 focus:outline-none min-h-[200px] px-4 py-3",
+        class: "prose-forum focus:outline-none min-h-[200px] px-4 py-3",
       },
     },
   })

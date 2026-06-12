@@ -27,12 +27,12 @@ export function ReplyForm({ topicId }: { topicId: string }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h3 className="font-display text-lg font-bold tracking-tight mb-4">Votre réponse</h3>
-      {error && <div className="bg-destructive/10 border border-destructive/20 text-destructive text-xs rounded-lg px-4 py-3 mb-4">{error}</div>}
-      <RichEditor content={content} onChange={setContent} placeholder="Écrivez votre réponse…" />
-      <div className="flex items-center justify-end mt-4">
+      <h3 className="font-display text-lg mb-4">Répondre</h3>
+      {error && <div className="bg-destructive/10 border border-destructive/20 text-destructive text-[12px] rounded-md px-3 py-2 mb-3">{error}</div>}
+      <RichEditor content={content} onChange={setContent} placeholder="Votre réponse…" />
+      <div className="flex justify-end mt-3">
         <Button type="submit" disabled={submitting || !content.trim()} size="sm"
-          className="rounded-full bg-primary hover:bg-primary/90 font-semibold text-sm">
+          className="rounded-md bg-primary hover:bg-primary/90 text-xs h-8">
           {submitting ? "Envoi…" : "Publier la réponse"}
         </Button>
       </div>
