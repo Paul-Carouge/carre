@@ -9,9 +9,10 @@ const geist = Geist({ variable: "--font-body", subsets: ["latin"], weight: ["400
 const geistMono = Geist_Mono({ variable: "--font-mono", subsets: ["latin"], weight: ["400", "500"] })
 
 export const metadata: Metadata = {
-  title: "4by4 — Forum",
-  description: "Un forum brut, structuré, sans distraction.",
-  openGraph: { title: "4by4 — Forum", description: "Un forum brut, structuré, sans distraction.", type: "website" },
+  title: "4×4 — Le forum des passionnés",
+  description: "Discussions structurées, communauté authentique, zéro distraction. Le forum qui a de l'âme.",
+  openGraph: { title: "4×4 — Le forum des passionnés", description: "Discussions structurées, communauté authentique, zéro distraction.", type: "website" },
+  metadataBase: new URL("https://4by4.vercel.app"),
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
