@@ -77,4 +77,41 @@ export type Trophy = {
   tier: string
   requirement_type: string
   requirement_count: number
+  icon_url?: string | null
+  goal_description?: string | null
+}
+
+export type UserTrophy = {
+  id: string
+  user_id: string
+  trophy_id: string
+  earned_at: string
+  trophy?: Trophy
+}
+
+export type Notification = {
+  id: string
+  user_id: string
+  actor_id: string
+  type: "like" | "reply" | "follow" | "trophy" | "mention"
+  topic_id: string | null
+  post_id: string | null
+  read: boolean
+  created_at: string
+  actor?: Profile
+  topic?: Topic
+  post?: Post
+}
+
+export type Follow = {
+  id: string
+  follower_id: string
+  following_id: string
+  created_at: string
+}
+
+export type SearchResult = {
+  type: "user" | "topic"
+  user?: Profile
+  topic?: Topic
 }
