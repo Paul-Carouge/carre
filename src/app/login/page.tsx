@@ -23,8 +23,8 @@ function LoginForm() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const redirect = searchParams.get("redirect") || "/"
+  const sp = useSearchParams()
+  const redirect = sp.get("redirect") || "/"
   const supabase = createClient()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,21 +48,21 @@ function LoginForm() {
     <div className="min-h-[70vh] flex items-center justify-center p-6">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <Link href="/" className="font-display text-3xl text-foreground">4by4</Link>
+          <Link href="/" className="font-display text-3xl font-bold text-foreground">4by4</Link>
           <p className="text-[11px] text-muted-foreground mt-2 font-mono uppercase tracking-wider">{isSignUp ? "Inscription" : "Connexion"}</p>
         </div>
-        <div className="bg-card border border-border rounded-lg p-5">
+        <div className="card-panel p-5 glow-primary">
           <form onSubmit={handleSubmit} className="space-y-3">
             {error && <div className="bg-destructive/10 border border-destructive/20 text-destructive text-[12px] rounded-md px-3 py-2">{error}</div>}
-            {isSignUp && <Input type="text" value={username} onChange={e => setUsername(e.target.value)} required minLength={3} placeholder="Nom d'utilisateur" className="bg-background text-[13px] h-9 rounded-md" />}
-            <Input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="Email" className="bg-background text-[13px] h-9 rounded-md" />
-            <Input type="password" value={password} onChange={e => setPassword(e.target.value)} required minLength={6} placeholder="Mot de passe" className="bg-background text-[13px] h-9 rounded-md" />
-            <Button type="submit" disabled={loading} className="w-full rounded-md bg-primary hover:bg-primary/90 text-sm h-9">{loading ? "…" : isSignUp ? "Créer le compte" : "Se connecter"}</Button>
+            {isSignUp && <Input type="text" value={username} onChange={e => setUsername(e.target.value)} required minLength={3} placeholder="Nom d'utilisateur" className="bg-background border-border text-[13px] h-9 rounded-lg" />}
+            <Input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="Email" className="bg-background border-border text-[13px] h-9 rounded-lg" />
+            <Input type="password" value={password} onChange={e => setPassword(e.target.value)} required minLength={6} placeholder="Mot de passe" className="bg-background border-border text-[13px] h-9 rounded-lg" />
+            <Button type="submit" disabled={loading} className="w-full rounded-lg bg-primary hover:bg-primary/90 text-sm h-9 font-semibold">{loading ? "…" : isSignUp ? "Créer" : "Connexion"}</Button>
           </form>
         </div>
         <p className="text-center text-[12px] text-muted-foreground mt-4">
           {isSignUp ? "Déjà inscrit ?" : "Pas de compte ?"}{" "}
-          <button type="button" onClick={() => setIsSignUp(!isSignUp)} className="text-primary hover:underline font-medium">{isSignUp ? "Se connecter" : "S'inscrire"}</button>
+          <button type="button" onClick={() => setIsSignUp(!isSignUp)} className="text-primary hover:underline font-medium">{isSignUp ? "Connexion" : "S'inscrire"}</button>
         </p>
       </div>
     </div>

@@ -26,7 +26,7 @@ export function LikeButton({ post }: { post: Post }) {
 
   return (
     <button onClick={handleLike} disabled={loading}
-      className={`inline-flex items-center gap-1 text-[12px] font-mono transition-colors ${liked ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}>
+      className={`inline-flex items-center gap-1.5 text-[12px] font-mono transition-colors ${liked ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}>
       <svg className="size-3.5" fill={liked ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
       </svg>

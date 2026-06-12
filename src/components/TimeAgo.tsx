@@ -4,28 +4,15 @@ import { useEffect, useState } from "react"
 
 export function TimeAgo({ date }: { date: string }) {
   const [text, setText] = useState("")
-
-  useEffect(() => {
-    setText(formatTimeAgo(date))
-    const interval = setInterval(() => setText(formatTimeAgo(date)), 60000)
-    return () => clearInterval(interval)
-  }, [date])
-
+  useEffect(() => { setText(fmt(date)); const i = setInterval(() => setText(fmt(date)), 60000); return () => clearInterval(i) }, [date])
   return <span suppressHydrationWarning>{text}</span>
 }
 
-function formatTimeAgo(dateStr: string): string {
-  const now = Date.now()
-  const then = new Date(dateStr).getTime()
-  const seconds = Math.floor((now - then) / 1000)
-  const minutes = Math.floor(seconds / 60)
-  const hours = Math.floor(minutes / 60)
-  const days = Math.floor(hours / 24)
-
-  if (seconds < 60) return "à l'instant"
-  if (minutes < 60) return `il y a ${minutes} min`
-  if (hours < 24) return `il y a ${hours}h`
-  if (days < 7) return `il y a ${days}j`
+function fmt(d: string): string {
+  const s = Math.floor((Date.now() - new Date(d).getTime()) / 1000)
+  const m = Math.floor(s / 60); const h = Math.floor(m / 60); const days = Math.floor(h / 24)
+  if (s < 60) return "à l'instant"; if (m < 60) return `il y a ${m} min`
+  if (h < 24) return `il y a ${h}h`; if (days < 7) return `il y a ${days}j`
   if (days < 30) return `il y a ${Math.floor(days / 7)} sem.`
-  return new Date(dateStr).toLocaleDateString("fr-FR")
+  return new Date(d).toLocaleDateString("fr-FR")
 }

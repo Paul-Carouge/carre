@@ -18,7 +18,7 @@ export function ReplyForm({ topicId }: { topicId: string }) {
     setSubmitting(true); setError("")
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) { setError("Connectez-vous pour répondre."); setSubmitting(false); return }
+    if (!user) { setError("Connectez-vous."); setSubmitting(false); return }
     const { error: pe } = await supabase.from("posts").insert({ topic_id: topicId, author_id: user.id, content })
     if (pe) { setError(pe.message); setSubmitting(false); return }
     await supabase.from("topics").update({ reply_count: undefined, last_reply_at: new Date().toISOString(), last_reply_by: user.id }).eq("id", topicId)
@@ -27,14 +27,11 @@ export function ReplyForm({ topicId }: { topicId: string }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h3 className="font-display text-lg mb-4">Répondre</h3>
-      {error && <div className="bg-destructive/10 border border-destructive/20 text-destructive text-[12px] rounded-md px-3 py-2 mb-3">{error}</div>}
+      <h3 className="font-display text-lg font-bold mb-4">Répondre</h3>
+      {error && <div className="bg-destructive/10 border border-destructive/20 text-destructive text-[12px] rounded-lg px-3 py-2 mb-3">{error}</div>}
       <RichEditor content={content} onChange={setContent} placeholder="Votre réponse…" />
       <div className="flex justify-end mt-3">
-        <Button type="submit" disabled={submitting || !content.trim()} size="sm"
-          className="rounded-md bg-primary hover:bg-primary/90 text-xs h-8">
-          {submitting ? "Envoi…" : "Publier la réponse"}
-        </Button>
+        <Button type="submit" disabled={submitting || !content.trim()} size="sm" className="rounded-lg bg-primary hover:bg-primary/90 text-xs h-8 font-semibold">{submitting ? "…" : "Publier"}</Button>
       </div>
     </form>
   )
