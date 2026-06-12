@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef, useCallback } from "react"
 import { createClient } from "@/lib/supabase/client"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -29,7 +29,6 @@ export function ForumHeader() {
     return () => { l.subscription.unsubscribe(); window.removeEventListener("scroll", h) }
   }, [])
 
-  // GSAP entrance
   useEffect(() => {
     gsap.fromTo(headerRef.current, { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" })
   }, [])
@@ -42,17 +41,9 @@ export function ForumHeader() {
       }`}
     >
       <div className="flex items-center justify-between h-14 px-4 sm:px-8 lg:px-12">
-        <div className="flex items-center gap-6">
-          <Link href="/" className="font-display text-lg font-bold tracking-tight hover:text-primary transition-colors">
-            4by4
-          </Link>
-          <nav className="hidden sm:flex items-center gap-5 text-[13px] font-medium">
-            <Link href="/c/general" className="text-muted-foreground hover:text-foreground transition-colors">Général</Link>
-            <Link href="/c/technologie" className="text-muted-foreground hover:text-foreground transition-colors">Tech</Link>
-            <Link href="/c/creation" className="text-muted-foreground hover:text-foreground transition-colors">Création</Link>
-            <Link href="/c/jeux-video" className="text-muted-foreground hover:text-foreground transition-colors">Jeux</Link>
-          </nav>
-        </div>
+        <Link href="/" className="font-display text-lg font-bold tracking-tight hover:text-primary transition-colors">
+          4by4
+        </Link>
 
         <div className="flex items-center gap-3">
           {user && profile ? (
@@ -64,7 +55,9 @@ export function ForumHeader() {
                 <span className="hidden sm:inline text-[13px] font-medium text-muted-foreground">{profile.display_name || profile.username}</span>
               </Link>
               <Link href="/new">
-                <Button size="sm" className="rounded-lg bg-primary hover:bg-primary/90 text-xs h-8 font-semibold">+ Sujet</Button>
+                <Button size="default" className="rounded-lg bg-primary hover:bg-primary/90 font-semibold text-sm px-6 h-10">
+                  + Nouveau sujet
+                </Button>
               </Link>
             </>
           ) : (
@@ -73,7 +66,9 @@ export function ForumHeader() {
                 <Button variant="ghost" size="sm" className="text-muted-foreground text-xs h-8 rounded-lg">Connexion</Button>
               </Link>
               <Link href="/new">
-                <Button size="sm" className="rounded-lg bg-primary hover:bg-primary/90 text-xs h-8 font-semibold">+ Sujet</Button>
+                <Button size="default" className="rounded-lg bg-primary hover:bg-primary/90 font-semibold text-sm px-6 h-10">
+                  + Nouveau sujet
+                </Button>
               </Link>
             </>
           )}

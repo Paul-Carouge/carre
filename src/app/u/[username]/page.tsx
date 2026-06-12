@@ -39,7 +39,12 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
             {(p.display_name || p.username)[0].toUpperCase()}
           </div>
           <div className="pb-1">
-            <h1 className="font-display text-3xl font-bold" style={{ color: p.title_color || 'var(--text-primary)' }}>{p.display_name || p.username}</h1>
+            <div className="flex items-center gap-3">
+              <h1 className="font-display text-3xl font-bold" style={{ color: p.title_color || 'var(--text-primary)' }}>{p.display_name || p.username}</h1>
+              <Link href={`/u/${p.username}/edit`} className="text-xs text-muted-foreground hover:text-primary transition-colors font-mono border border-border rounded-lg px-2 py-1">
+                Modifier
+              </Link>
+            </div>
             <p className="text-sm text-muted-foreground font-mono mt-0.5">@{p.username}</p>
             {p.bio && <p className="text-foreground/70 mt-3 max-w-xl leading-relaxed">{p.bio}</p>}
             <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground font-mono">

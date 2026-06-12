@@ -38,10 +38,6 @@ export default function HomePage() {
               <span><strong className="text-foreground text-lg">{stats.posts}</strong> messages</span>
               <span><strong className="text-foreground text-lg">{stats.users}</strong> membres</span>
             </div>
-            <div className="flex-1" />
-            <Link href="/new">
-              <Button size="sm" className="rounded-lg bg-primary hover:bg-primary/90 text-sm h-9 font-semibold px-5">+ Nouveau sujet</Button>
-            </Link>
           </div>
           <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tighter leading-[0.92] max-w-3xl">
             Le forum <span className="text-primary">structuré</span> pour les <span className="text-secondary">vraies</span> discussions
